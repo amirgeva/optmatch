@@ -1,5 +1,4 @@
-# optmatch
-OpticMatch OCR Library
+# OpticMatch OCR Library
 
 Currently available, only the single character classifier.
 
