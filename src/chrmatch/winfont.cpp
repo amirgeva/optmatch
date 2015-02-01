@@ -36,7 +36,7 @@ namespace OpticMatch {
       if (!params.empty())
       {
         xml_ptr root=load_xml_from_text(params);
-        m_Generator.load_xml_from_text(root);
+        m_Generator.load_from_xml(root);
       }
       else
       {
