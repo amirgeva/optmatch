@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <opencv2/opencv.hpp>
+#include <optmatch/exceptions.h>
 
 namespace OpticMatch {
 

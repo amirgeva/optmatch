@@ -73,7 +73,7 @@ namespace OpticMatch {
       bi.bmiHeader.biPlanes = 1;
       bi.bmiHeader.biBitCount = 32;
       m_Bitmap = CreateDIBSection(m_DC, &bi, DIB_RGB_COLORS, (LPVOID*)&m_Buffer, NULL, 0);
-      if (m_Bitmap == NULL) throw std::exception("Failed to create windows bitmap");
+      if (m_Bitmap == NULL) throw general_message_exception("Failed to create windows bitmap");
       m_Rect.left = m_Rect.top = 0;
       m_Rect.right = m_Width;
       m_Rect.bottom = m_Height;

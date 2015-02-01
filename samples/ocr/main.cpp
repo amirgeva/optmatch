@@ -4,7 +4,7 @@ cv::Mat create_image_from_string(const std::string& s, int w, int h)
 {
   int idx = 0;
   cv::Mat image(w, h, CV_8UC1);
-  if (s.length() < (w*h)) return image;
+  if (s.length() < unsigned(w*h)) return image;
   for (int y = 0; y < h;++y)
   {
     unsigned char* row = image.ptr(y);
