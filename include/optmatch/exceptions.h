@@ -9,7 +9,7 @@ namespace OpticMatch {
   public:
     general_message_exception(const std::string& msg)
       : m_Message(msg) {}
-    virtual const char* what() const override
+    virtual const char* what() const noexcept override
     {
       return m_Message.c_str();
     }
