@@ -3,13 +3,19 @@
 
 namespace OpticMatch {
 
+#ifndef _MSC_VER
+#define NOEXCEPT noexcept
+#else
+#define NOEXCEPT
+#endif
+
   class general_message_exception : public std::exception
   {
     std::string m_Message;
   public:
     general_message_exception(const std::string& msg)
       : m_Message(msg) {}
-    virtual const char* what() const noexcept override
+    virtual const char* what() const NOEXCEPT override
     {
       return m_Message.c_str();
     }
