@@ -266,7 +266,7 @@ namespace OpticMatch {
 
     virtual bool add_training_sample(const cv::Mat& image, wchar_t c) override
     {
-      if (image.channels() != 1) throw std::exception("Only grayscale images are accepted.");
+      if (image.channels() != 1) throw invalid_parameters_exception("Only grayscale images are accepted.");
       cv::Mat img = normalize(image);
       auto it = m_TS.find(c);
       if (it==m_TS.end())
