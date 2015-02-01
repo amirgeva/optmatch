@@ -6,8 +6,6 @@
 #include <opencv2/opencv.hpp>
 #include <optmatch/generator.h>
 #include <optmatch/xml.h>
-#include <locale>
-#include <codecvt>
 
 namespace OpticMatch {
 
@@ -24,7 +22,7 @@ namespace OpticMatch {
     int     m_Height;
     FontGenerator m_Generator;
     bool    m_Done;
-    std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> m_Converter;
+    
   public:
     WindowsCharImageGenerator(const std::string& params)
       : m_DC(0)
@@ -38,24 +36,7 @@ namespace OpticMatch {
       if (!params.empty())
       {
         xml_ptr root=load_xml_from_text(params);
-        for(const auto& spec : *root)
-        {
-          if (spec->get_type() == "font")
-          {
-            std::string face = spec->get_attribute("face");
-            m_Generator.add_face(m_Converter.from_bytes(face));
-          }
-          if (spec->get_type() == "height")
-          {
-            int h = atoi(spec->get_attribute("value").c_str());
-            m_Generator.add_height(h);
-          }
-          if (spec->get_type() == "weight")
-          {
-            int w = atoi(spec->get_attribute("value").c_str());
-            m_Generator.add_weight(w);
-          }
-        }
+        m_Generator.load_xml_from_text(root);
       }
       else
       {

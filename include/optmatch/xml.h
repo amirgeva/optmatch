@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <optmatch/exceptions.h>
 
 using std::string;
 
@@ -183,7 +184,7 @@ namespace OpticMatch {
       return res;
     }
 
-#define SYNTAX_ERROR throw std::exception("XML Syntax Error")
+#define SYNTAX_ERROR throw general_message_exception("XML Syntax Error")
 #define EXPECT(t) { token=analyze(is,last); if (token!=t) SYNTAX_ERROR; }
 
     void parse_element(std::istream& is, xml_ptr parent)

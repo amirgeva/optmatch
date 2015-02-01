@@ -1,4 +1,9 @@
 build
+intr
+out
+settings.ini
+Makefile
+mk.cfg
 
 # Compiled Object files
 *.slo

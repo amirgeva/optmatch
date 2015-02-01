@@ -3,7 +3,8 @@
 
 #include <memory>
 #include <opencv2/opencv.hpp>
-#include <optmatch/exceptions.h>
+#include <optmatch/xml.h>
+
 
 namespace OpticMatch {
 
@@ -38,6 +39,30 @@ public:
   void add_italics(int i) { m_Italics.push_back(i); }
   void set_alphabet(const str& abc) { m_Alphabet = abc; }
 
+  void load_from_xml(xml_ptr root)
+  {
+    for(const auto& spec : *root)
+    {
+      if (spec->get_type() == "font")
+      {
+        std::string face = spec->get_attribute("face");
+        std::wstring wface(face.length(),L' ');
+        std::copy(face.begin(),face.end(),wface.begin());
+        add_face(wface);
+      }
+      if (spec->get_type() == "height")
+      {
+        int h = atoi(spec->get_attribute("value").c_str());
+        add_height(h);
+      }
+      if (spec->get_type() == "weight")
+      {
+        int w = atoi(spec->get_attribute("value").c_str());
+        add_weight(w);
+      }
+    }
+  }
+  
   void reset()
   {
     m_FaceIt = m_Faces.begin();
