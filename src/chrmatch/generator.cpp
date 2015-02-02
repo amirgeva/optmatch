@@ -2,18 +2,6 @@
 
 namespace OpticMatch {
 
-  template<class T>
-  inline const T& Max(const T& a, const T& b)
-  {
-    return (a > b ? a : b);
-  }
-
-  template<class T>
-  inline const T& Min(const T& a, const T& b)
-  {
-    return (a < b ? a : b);
-  }
-
   void crop(cv::Mat& image)
   {
     int w = image.cols, h = image.rows;

@@ -23,26 +23,22 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ***************************************************************************/
-#ifndef H_OPTIC_MATCH
-#define H_OPTIC_MATCH
+#ifndef prims_h__
+#define prims_h__
 
-#include <optmatch/prims.h>
-#include <optmatch/generator.h>
 
-namespace OpticMatch {
-
-class CharClassifier
+template<class T>
+inline const T& Max(const T& a, const T& b)
 {
-public:
-  virtual ~CharClassifier() {}
-  
-  virtual bool add_training_sample(const cv::Mat& image, wchar_t c) = 0;
-  virtual bool train(CharImageGenerator& cig) = 0;
-  virtual wchar_t classify(const cv::Mat& image, double* conf=nullptr) const = 0;
-  
-  static std::shared_ptr<CharClassifier> create(const std::string& params); 
-};
+  return (a > b ? a : b);
+}
 
-} // namespace OpticMatch
+template<class T>
+inline const T& Min(const T& a, const T& b)
+{
+  return (a < b ? a : b);
+}
 
-#endif // H_OPTIC_MATCH
+
+
+#endif // prims_h__
