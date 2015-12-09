@@ -91,13 +91,16 @@ namespace OpticMatch {
   const unsigned BOTTOM = 8;
 
   static const cell_mat s_EmptyMat(NSIZE, NSIZE, Cell());
+  static const byte blank_row[] = { 255, 255, 255, 255, 255, 255, 255, 255,
+                                    255, 255, 255, 255, 255, 255, 255, 255,
+                                    255, 255, 255, 255, 255, 255, 255, 255,
+                                    255, 255, 255, 255, 255, 255, 255, 255 };
 
   class Perimeter
   {
     typedef std::vector<PerimeterPixel> pp_vec;
     pp_vec  m_Points;
     cm_vec  m_Matrices;
-    static  bvec blank;
 
     inline void check(cell_mat& m, const Cell& o, int x, int y, pp_seq& horizon)
     {
@@ -189,9 +192,9 @@ namespace OpticMatch {
       unsigned w = image.cols, h = image.rows;
       for (unsigned y = 0; y < h; ++y)
       {
-        const byte* prow = (y == 0 ? &blank[0] : image.ptr(y - 1));
+        const byte* prow = (y == 0 ? &blank_row[0] : image.ptr(y - 1));
         const byte* crow = image.ptr(y);
-        const byte* nrow = (y == (h - 1) ? &blank[0] : image.ptr(y + 1));
+        const byte* nrow = (y == (h - 1) ? &blank_row[0] : image.ptr(y + 1));
         for (unsigned x = 0; x < w; ++x)
         {
           if (crow[x] == 0)
@@ -266,8 +269,6 @@ namespace OpticMatch {
     return exp(-m);
   }
 
-  bvec Perimeter::blank(32, 255);
-
   void crop(cv::Mat& image);
 
   class OpticMatchCharClassifier : public CharClassifier
@@ -314,9 +315,17 @@ namespace OpticMatch {
 
     virtual wchar_t classify(const cv::Mat& image, double* conf) const override
     {
+      if (m_TS.empty())
+      {
+        if (conf) *conf = 0;
+        return wchar_t(0);
+      }
       cv::Mat img = image;
-      crop(img);
-      img=normalize(img);
+      if (img.cols != NSIZE || img.rows != NSIZE)
+      {
+        crop(img);
+        img = normalize(img);
+      }
       Perimeter p(img);
       std::multimap<double, wchar_t> score_map;
       for (auto it = m_TS.begin(); it != m_TS.end();++it)

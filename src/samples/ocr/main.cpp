@@ -56,23 +56,31 @@ int main(int argc, char* argv[])
       "<weight value=\"400\"/>"
       "<weight value=\"700\"/>"
       "</fonts>";
-    auto trainer = OpticMatch::CharImageGenerator::create("");
-    //auto trainer = OpticMatch::CharImageGenerator::create(params);
+    //auto trainer = OpticMatch::CharImageGenerator::create("");
+    auto trainer = OpticMatch::CharImageGenerator::create(params);
     cls->train(*trainer);
-    std::string test_image =
-      "------------"
-      "------O-----"
-      "-----OOO----"
-      "----OO-OO---"
-      "---OO--OO---"
-      "--OO----OO--"
-      "--OO----OO--"
-      "--OO----OO--"
-      "-OOOOOOOOOO-"
-      "-OO------OO-"
-      "-OO------OO-"
-      "------------";
-    cv::Mat img = create_image_from_string(test_image, 12, 12);
+    cv::Mat img;
+    if (argc>1)
+    {
+      img=cv::imread(argv[1],CV_LOAD_IMAGE_GRAYSCALE);
+    }
+    else
+    {
+      std::string test_image =
+        "------------"
+        "------O-----"
+        "-----OOO----"
+        "----OO-OO---"
+        "---OO--OO---"
+        "--OO----OO--"
+        "--OO----OO--"
+        "--OO----OO--"
+        "-OOOOOOOOOO-"
+        "-OO------OO-"
+        "-OO------OO-"
+        "------------";
+      img = create_image_from_string(test_image, 12, 12);
+    }
     double conf=0;
     wchar_t c=cls->classify(img, &conf);
     std::wcout << c << L"  " << conf << std::endl;

@@ -57,7 +57,7 @@ class FontGenerator
   int_it  m_HeightIt, m_WeightIt, m_ItalicIt;
   chr_it  m_CharIt;
 public:
-  FontGenerator() : m_Italics(1, 0), m_Alphabet(L"ABCDEFGHIJKLMNOPQRSTUVWXYZ") {}
+  FontGenerator() : m_Italics(1, 0), m_Alphabet(L"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789") {}
   void add_face(const str& face) { m_Faces.push_back(face); }
   void add_height(int h) { m_Heights.push_back(h); }
   void add_weight(int w) { m_Weights.push_back(w); }
